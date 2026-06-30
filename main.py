@@ -1,11 +1,16 @@
 from fastapi import FastAPI
 from models import Product
+from database import SessionLocal, engine
+import database_model
 app = FastAPI()
+
+database_model.Base.metadata.create_all(bind=engine)
 
 @app.get("/")
 def greet():
     return "hello from store"
 
+db = SessionLocal()
 
 products = [
     Product(
